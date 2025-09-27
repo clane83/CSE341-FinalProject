@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const dbClient = require('../data/datbase');
+const dbClient = require('../data/database');
 
 async function allUsers(_req, res) {
     try {

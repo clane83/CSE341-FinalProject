@@ -6,3 +6,5 @@ const songsController = require('../controller/songs')
 // const { isAuthenticated } = require('../middleware/authentication')
 
 router.get('/', songsController.allSongs);
+
+module.exports = router;

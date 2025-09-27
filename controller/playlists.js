@@ -1,17 +1,17 @@
 const { ObjectId } = require('mongodb');
-const dbClient = require('../data/datbase');
+const dbClient = require('../data/database');
 
-async function allPlaylits(_req, res) {
+async function allPlaylists(_req, res) {
     try {
-        const users = await dbClient
+        const playlists = await dbClient
             .getDb()
-            .collection('users')
+            .collection('playlists')
             .find({})
             .toArray();
-        res.status(200).json(users);
+        res.status(200).json(playlists);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 }
 
-module.exports = { allPlaylits }
+module.exports = { allPlaylists };

@@ -6,3 +6,5 @@ const reviewsController = require('../controller/reviews')
 // const { isAuthenticated } = require('../middleware/authentication')
 
 router.get('/', reviewsController.allReviews);
+
+module.exports = router;

@@ -6,3 +6,5 @@ const usersController = require('../controller/users')
 // const { isAuthenticated } = require('../middleware/authentication')
 
 router.get('/', usersController.allUsers);
+
+module.exports = router;

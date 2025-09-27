@@ -5,7 +5,7 @@
     "description": "Users API Information",
     "version": "1.0.0"
   },
-  "host": "6000",
+  "host": "3000",
   "basePath": "/",
   "schemes": [
     "http",
@@ -13,29 +13,6 @@
   ],
   "paths": {
     "/": {
-      "get": {
-        "tags": [
-          "Hello world"
-        ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/login": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/logout": {
       "get": {
         "description": "",
         "responses": {
@@ -58,7 +35,7 @@
         }
       }
     },
-    "/destination/": {
+    "/songs/": {
       "get": {
         "description": "",
         "responses": {
@@ -71,7 +48,33 @@
         }
       }
     },
-    "/api-docs": {
+    "/reviews/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/playlists/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api-docs/api-docs": {
       "get": {
         "description": "",
         "responses": {
