@@ -1,8 +1,11 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+
 router.use('/users', require('./users'));
-router.use('/destination', require('./songs'));
+router.use('/songs', require('./songs'));
+router.use('/reviews', require('./reviews'));
+router.use('/playlists', require('./playlists'));
 router.use('/', require('./swagger'));
 
 router.get('/', (req, res) => {
@@ -24,3 +27,5 @@ router.get('/logout', (req, res, next) => {
         });
     });
 });
+
+module.exports = router;
