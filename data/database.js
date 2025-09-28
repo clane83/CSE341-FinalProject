@@ -11,13 +11,11 @@ async function initDb(callback) {
             console.log('Database already initialized');
             return callback(null, database);
         }
-        console.log('Connecting to MongoDB with URL:', process.env.MONGODB_URL);
         const client = await MongoClient.connect(process.env.MONGODB_URL);
         database = client.db();
         console.log('MongoDB connected to database:', database.databaseName);
         return callback(null, database);
     } catch (err) {
-        console.error('MongoDB connection error:', err);
         return callback(err);
     }
 }
