@@ -5,25 +5,12 @@
     "description": "Users API Information",
     "version": "1.0.0"
   },
-  "host": "3000",
+  "host": "https://cse341-finalproject-ebyq.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "tags": [
-          "Hello world"
-        ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/users/": {
       "get": {
         "description": "",
@@ -637,6 +624,16 @@
             "description": "Song ID"
           }
         ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api-docs": {
+      "get": {
+        "description": "",
         "responses": {
           "default": {
             "description": ""
