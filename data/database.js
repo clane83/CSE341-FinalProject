@@ -1,22 +1,33 @@
-const dotenv = require('dotenv');
-dotenv.config();
+// data/database.js
+const { MongoClient } = require('mongodb');
 
-const MongoClient = require('mongodb').MongoClient;
+let client, database;
 
-let database;
-
-async function initDb(callback) {
+async function initDb(cb) {
     try {
-        if (database) {
-            console.log('Database already initialized');
-            return callback(null, database);
+        if (database) return cb?.(null, database);
+
+        const uri = process.env.MONGODB_URL || process.env.MONGODB_URI;
+        if (!uri) {
+            throw new Error('Missing MONGODB_URL/MONGODB_URI env var (Render).');
         }
-        const client = await MongoClient.connect(process.env.MONGODB_URL);
-        database = client.db();
-        console.log('MongoDB connected to database:', database.databaseName);
-        return callback(null, database);
+        if (/localhost|127\.0\.0\.1/.test(uri)) {
+            throw new Error('Mongo URI points to localhost. Use your Atlas/hosted URI in Render.');
+        }
+
+        client = new MongoClient(uri, { serverSelectionTimeoutMS: 10000 });
+        await client.connect();
+
+        // Use db name from env if you want to force it; otherwise use the one in URI
+        const dbName = process.env.MONGODB_DB;
+        database = dbName ? client.db(dbName) : client.db();
+
+        await database.command({ ping: 1 }); // fail early if auth/network is wrong
+        console.log('Mongo connected to:', database.databaseName);
+        return cb?.(null, database);
     } catch (err) {
-        return callback(err);
+        console.error('Mongo init error:', err.message);
+        return cb?.(err);
     }
 }
 
@@ -25,7 +36,4 @@ function getDb() {
     return database;
 }
 
-module.exports = {
-    initDb,
-    getDb,
-};
+module.exports = { initDb, getDb };
