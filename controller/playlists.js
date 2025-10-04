@@ -14,24 +14,45 @@ async function allPlaylists(_req, res) {
     }
 }
 
-const createPlayLists = async (req, res) => {
+async function createPlayLists(req, res) {
+    /* #swagger.parameters['body'] = {
+          in: 'body',
+          required: true,
+          schema: {
+            owner: '66f000000000000000000001',
+            name: 'Coding Lo-Fi',
+            description: 'Lo-fi tracks for deep work sessions.',
+            songs: ['66f100000000000000000001','66f100000000000000000003'],
+            isPublic: true,
+            followers: ['66f200000000000000000001']
+          }
+       }
+    */
+
     try {
         // const desitnationId = new ObjectId(req.params.id);
         const todayYMD = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+
+        const f = req.body.followers;
+        const followers = Array.isArray(f) ? f : (f == null ? [] : [f]);
+
+        const s = req.body.songs;
+        const songs = Array.isArray(s) ? s : (s == null ? [] : [s]);
+
 
         const playlists = {
             owner: req.body.owner,
             name: req.body.name,
             description: req.body.description,
             isPublic: req.body.isPublic,
-            songs: req.body.songs,
-            followers: req.body.followers,
+            songs,
+            followers,
             createdby: req.body.createdby,
             createdAt: todayYMD, //use formatted date to insert into database
             updatedAt: todayYMD, //use formatted date to insert into database
         }
 
-        const response = await mongodb.getDb().collection('playlists').insertOne(playlists);
+        const response = await dbClient.getDb().collection('playlists').insertOne(playlists);
         if (response.acknowledged) {
             res.status(201).json(response);
         } else {
@@ -42,7 +63,20 @@ const createPlayLists = async (req, res) => {
     }
 };
 
-const updatePlayLists = async (req, res) => {
+async function updatePlayLists(req, res) {
+    /* #swagger.parameters['body'] = {
+          in: 'body',
+          required: true,
+          schema: {
+            owner: '66f000000000000000000001',
+            name: 'Coding Lo-Fi',
+            description: 'Lo-fi tracks for deep work sessions.',
+            songs: ['66f100000000000000000001','66f100000000000000000003'],
+            isPublic: true,
+            followers: ['66f200000000000000000001']
+          }
+       }
+    */
     if (!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a valid playlist id to update a playlist.');
     }
@@ -60,7 +94,7 @@ const updatePlayLists = async (req, res) => {
         updatedAt: todayYMD, //use formatted date to insert into database
     }
 
-    const response = await mongodb
+    const response = await dbClient
         .getDb()
         .collection('playlists')
         .replaceOne({ _id: playListId }, playlists);
@@ -72,12 +106,12 @@ const updatePlayLists = async (req, res) => {
     }
 };
 
-const deletePlayLists = async (req, res) => {
+async function deletePlayLists(req, res) {
     if (!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a valid contact id to delete a playlist.');
     }
     const playListId = new ObjectId(req.params.id);
-    const response = await mongodb
+    const response = await dbClient
         .getDb()
         .collection('playlists')
         .deleteOne({ _id: playListId }, true);

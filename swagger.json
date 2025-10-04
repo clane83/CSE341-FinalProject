@@ -499,29 +499,44 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "songs": {
-                  "example": "any"
-                },
-                "followers": {
-                  "example": "any"
-                },
                 "owner": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "66f000000000000000000001"
                 },
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Coding Lo-Fi"
                 },
                 "description": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Lo-fi tracks for deep work sessions."
+                },
+                "songs": {
+                  "type": "array",
+                  "example": [
+                    "66f100000000000000000001",
+                    "66f100000000000000000003"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "isPublic": {
-                  "example": "any"
+                  "type": "boolean",
+                  "example": true
                 },
-                "createdby": {
-                  "example": "any"
+                "followers": {
+                  "type": "array",
+                  "example": [
+                    "66f200000000000000000001"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -553,29 +568,44 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "songs": {
-                  "example": "any"
-                },
-                "followers": {
-                  "example": "any"
-                },
                 "owner": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "66f000000000000000000001"
                 },
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Coding Lo-Fi"
                 },
                 "description": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Lo-fi tracks for deep work sessions."
+                },
+                "songs": {
+                  "type": "array",
+                  "example": [
+                    "66f100000000000000000001",
+                    "66f100000000000000000003"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "isPublic": {
-                  "example": "any"
+                  "type": "boolean",
+                  "example": true
                 },
-                "createdby": {
-                  "example": "any"
+                "followers": {
+                  "type": "array",
+                  "example": [
+                    "66f200000000000000000001"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -595,38 +625,21 @@
       },
       "delete": {
         "description": "",
+        "consumes": [
+          null
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "songs": {
-                  "example": "any"
-                },
-                "followers": {
-                  "example": "any"
-                }
-              }
-            }
+            "type": "string",
+            "description": "Song ID"
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       }

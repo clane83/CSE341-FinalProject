@@ -17,6 +17,18 @@ router.put('/:id',
     validation.savePlayLists,
     playlistsController.updatePlayLists);
 router.delete('/:id',
+    /*
+    #swagger.parameters = [
+      {
+        name: 'id',
+        in: 'path',
+        required: true,
+        type: 'string',
+        description: 'Song ID'
+      }
+    ]
+    #swagger.consumes = []   // explicitly no request body
+  */
     // isAuthenticated,
     validation.savePlayLists,
     playlistsController.deletePlayLists);
