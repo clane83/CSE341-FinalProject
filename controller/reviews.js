@@ -14,7 +14,7 @@ async function allReviews(_req, res) {
     }
 }
 
-const createReviews = async (req, res) => {
+async function createReviews(req, res) {
     try {
         // const desitnationId = new ObjectId(req.params.id);
         const todayYMD = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
@@ -29,7 +29,7 @@ const createReviews = async (req, res) => {
             updatedAt: todayYMD, //use formatted date to insert into database
         }
 
-        const response = await mongodb.getDb().collection('reviews').insertOne(reviews);
+        const response = await dbClient.getDb().collection('reviews').insertOne(reviews);
         if (response.acknowledged) {
             res.status(201).json(response);
         } else {
@@ -40,7 +40,7 @@ const createReviews = async (req, res) => {
     }
 };
 
-const updateReviews = async (req, res) => {
+async function updateReviews(req, res) {
     if (!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a valid playlist id to update a reviews.');
     }
@@ -56,7 +56,7 @@ const updateReviews = async (req, res) => {
         updatedAt: todayYMD, //use formatted date to insert into database
     }
 
-    const response = await mongodb
+    const response = await dbClient
         .getDb()
         .collection('reviews')
         .replaceOne({ _id: reviewtId }, reviews);
@@ -68,12 +68,12 @@ const updateReviews = async (req, res) => {
     }
 };
 
-const deleteReviews = async (req, res) => {
+async function deleteReviews(req, res) {
     if (!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a valid contact id to delete a review.');
     }
     const reviewsId = new ObjectId(req.params.id);
-    const response = await mongodb
+    const response = await dbClient
         .getDb()
         .collection('reviews')
         .deleteOne({ _id: reviewsId }, true);

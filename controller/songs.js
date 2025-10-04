@@ -109,6 +109,7 @@ async function updateSongs(req, res) {
 };
 
 async function deleteSongs(req, res) {
+
     if (!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a valid contact id to delete a song.');
     }
@@ -116,12 +117,12 @@ async function deleteSongs(req, res) {
     const response = await dbClient
         .getDb()
         .collection('songs')
-        .deleteOne({ _id: songsId }, true);
+        .deleteOne({ _id: songsId });
     if (response.deletedCount > 0) {
-        res.status(201).json(response);
-    } else {
-        res.status(500).json(response.error || 'Some error occurred while deleteing the song.');
+        return res.status(204).send(); // no body on success
     }
+    return res.status(404).json({ message: 'Song not found.' });
+
 };
 
 
