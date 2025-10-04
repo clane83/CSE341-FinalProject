@@ -13,11 +13,11 @@ router.post('/',
     songsController.createSongs);
 router.put('/:id',
     // isAuthenticated,
-    validation.saveUser,
+    validation.saveSongs,
     songsController.updateSongs);
 router.delete('/:id',
     // isAuthenticated,
-    validation.saveUser,
+    validation.saveSongs,
     songsController.deleteSongs);
 
 module.exports = router;
