@@ -15,10 +15,28 @@ async function allSongs(_req, res) {
 }
 
 
-const createSongs = async (req, res) => {
+async function createSongs(req, res) {
+    /* #swagger.parameters['body'] = {
+          in: 'body',
+          required: true,
+          schema: {
+            title: 'user@example.com',
+            artist: 'Alice Carter',
+            album: 'password123',
+            durationSec: '90',
+            year: '2023',
+            genre: 'pop',
+            tags: ['66f100000000000000000001','66f100000000000000000003'],
+            
+          }
+       }
+    */
     try {
         // const desitnationId = new ObjectId(req.params.id);
         const todayYMD = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+
+        const tagArray = req.body.tags || {};
+        const tags = tagArray.tags == null ? [] : (Array.isArray(tagArray.tags) ? tagArray.tags : [tagArray.tags]);
 
         const songs = {
             title: req.body.title,
@@ -27,12 +45,11 @@ const createSongs = async (req, res) => {
             genre: req.body.genre,
             durationSec: req.body.durationSec,
             year: req.body.year,
-            tags: req.body.tags,
-            createdAt: todayYMD, //use formatted date to insert into database
+            tags,
             updatedAt: todayYMD, //use formatted date to insert into database
         }
 
-        const response = await mongodb.getDb().collection('songs').insertOne(songs);
+        const response = await dbClient.getDb().collection('songs').insertOne(songs);
         if (response.acknowledged) {
             res.status(201).json(response);
         } else {
@@ -43,12 +60,30 @@ const createSongs = async (req, res) => {
     }
 };
 
-const updateSongs = async (req, res) => {
+async function updateSongs(req, res) {
+    /* #swagger.parameters['body'] = {
+          in: 'body',
+          required: true,
+          schema: {
+            title: 'user@example.com',
+            artist: 'Alice Carter',
+            album: 'password123',
+            durationSec: '90',
+            year: '2023',
+            genre: 'pop',
+            tags: ['66f100000000000000000001','66f100000000000000000003'],
+            
+          }
+       }
+    */
     if (!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a valid playlist id to update a song.');
     }
     const songsId = new ObjectId(req.params.id);
     const todayYMD = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+
+    const t = req.body.tags;
+    const tags = Array.isArray(t) ? t : (t == null ? [] : [t]);
 
     const songs = {
         title: req.body.title,
@@ -57,11 +92,11 @@ const updateSongs = async (req, res) => {
         genre: req.body.genre,
         durationSec: req.body.durationSec,
         year: req.body.year,
-        tags: req.body.tags,
+        tags,
         updatedAt: todayYMD, //use formatted date to insert into database
     }
 
-    const response = await mongodb
+    const response = await dbClient
         .getDb()
         .collection('songs')
         .replaceOne({ _id: songsId }, songs);
@@ -73,12 +108,12 @@ const updateSongs = async (req, res) => {
     }
 };
 
-const deleteSongs = async (req, res) => {
+async function deleteSongs(req, res) {
     if (!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a valid contact id to delete a song.');
     }
     const songsId = new ObjectId(req.params.id);
-    const response = await mongodb
+    const response = await dbClient
         .getDb()
         .collection('songs')
         .deleteOne({ _id: songsId }, true);

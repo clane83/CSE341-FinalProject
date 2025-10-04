@@ -157,11 +157,14 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -179,11 +182,14 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -209,29 +215,43 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "tags": {
-                  "example": "any"
-                },
                 "title": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "user@example.com"
                 },
                 "artist": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Alice Carter"
                 },
                 "album": {
-                  "example": "any"
-                },
-                "genre": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "password123"
                 },
                 "durationSec": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "90"
                 },
                 "year": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2023"
+                },
+                "genre": {
+                  "type": "string",
+                  "example": "pop"
+                },
+                "tags": {
+                  "type": "array",
+                  "example": [
+                    "66f100000000000000000001",
+                    "66f100000000000000000003"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -263,29 +283,43 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "title": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "user@example.com"
                 },
                 "artist": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Alice Carter"
                 },
                 "album": {
-                  "example": "any"
-                },
-                "genre": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "password123"
                 },
                 "durationSec": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "90"
                 },
                 "year": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2023"
+                },
+                "genre": {
+                  "type": "string",
+                  "example": "pop"
                 },
                 "tags": {
-                  "example": "any"
+                  "type": "array",
+                  "example": [
+                    "66f100000000000000000001",
+                    "66f100000000000000000003"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -311,6 +345,18 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
