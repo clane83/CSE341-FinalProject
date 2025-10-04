@@ -5,8 +5,8 @@ const doc = {
         title: 'Users Api',
         description: 'Users API Information'
     },
-    host: '3000',
-    schemes: ['http']
+    host: 'https://cse341-finalproject-ebyq.onrender.com',
+    schemes: ['https']
 };
 
 const outputFile = './swagger.json';
