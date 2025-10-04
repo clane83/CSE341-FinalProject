@@ -42,17 +42,45 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "user@example.com"
                 },
                 "displayName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Alice Carter"
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "password123"
+                },
+                "favorites": {
+                  "type": "object",
+                  "properties": {
+                    "songs": {
+                      "type": "array",
+                      "example": [
+                        "66f100000000000000000001",
+                        "66f100000000000000000003"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "playlists": {
+                      "type": "array",
+                      "example": [
+                        "66f200000000000000000001"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -84,23 +112,45 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "user@example.com"
                 },
                 "displayName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Alice Carter"
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "password123"
                 },
-                "songs": {
-                  "example": "any"
-                },
-                "playlists": {
-                  "example": "any"
+                "favorites": {
+                  "type": "object",
+                  "properties": {
+                    "songs": {
+                      "type": "array",
+                      "example": [
+                        "66f100000000000000000001",
+                        "66f100000000000000000003"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "playlists": {
+                      "type": "array",
+                      "example": [
+                        "66f200000000000000000001"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -545,6 +595,16 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
