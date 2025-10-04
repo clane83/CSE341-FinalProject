@@ -27,10 +27,16 @@ app.use(cors({
 // app.options('/(.*)', cors());
 
 app.use(session({
-    secret: 'secret',
+    secret: process.env.SESSION_SECRET || 'dev-secret',
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // true on Render (https)
+        sameSite: 'lax',
+    },
 }));
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -58,6 +64,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerSetup(swaggerDoc));
 
 // Your routes
 app.use('/', require('./routes/index.js'));
+
+app.get('/login', passport.authenticate('github', { scope: ['user:email'] }));
 
 app.get('/', (req, res) => {
     res.send(
@@ -97,7 +105,13 @@ passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: process.env.CALLBACK_URL, // must be HTTPS Render URL in prod
-}, (accessToken, refreshToken, profile, done) => done(null, profile)));
+},
+    function (accessToken, refreshToken, profile, done) {
+        //User.findOrCreate((githubId: profile.id), function(err,user){
+        return done(null, profile);
+        //})
+    }
+));
 
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));

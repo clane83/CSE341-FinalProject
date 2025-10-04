@@ -3,17 +3,17 @@ const router = express.Router();
 
 const playlistsController = require('../controller/playlists')
 const validation = require('../middleware/validate')
-// const { isAuthenticated } = require('../middleware/authentication')
+const { isAuthenticated } = require('../middleware/authentication')
 
 router.get('/', playlistsController.allPlaylists);
 
 
 router.post('/',
-    // isAuthenticated,
+    isAuthenticated,
     validation.savePlayLists,
     playlistsController.createPlayLists);
 router.put('/:id',
-    // isAuthenticated,
+    isAuthenticated,
     validation.savePlayLists,
     playlistsController.updatePlayLists);
 router.delete('/:id',
@@ -29,7 +29,7 @@ router.delete('/:id',
     ]
     #swagger.consumes = []   // explicitly no request body
   */
-    // isAuthenticated,
+    isAuthenticated,
     validation.savePlayLists,
     playlistsController.deletePlayLists);
 

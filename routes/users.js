@@ -10,15 +10,15 @@ router.get('/', usersController.allUsers);
 
 
 router.post('/',
-    // isAuthenticated,
+    isAuthenticated,
     validation.saveUser,
     usersController.createUser);
 router.put('/:id',
-    // isAuthenticated,
+    isAuthenticated,
     validation.saveUser,
     usersController.updateUser);
 router.delete('/:id',
-    // isAuthenticated,
+    isAuthenticated,
     validation.saveUser,
     usersController.deleteUser);
 

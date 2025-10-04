@@ -3,16 +3,16 @@ const router = express.Router();
 
 const songsController = require('../controller/songs')
 const validation = require('../middleware/validate')
-// const { isAuthenticated } = require('../middleware/authentication')
+const { isAuthenticated } = require('../middleware/authentication')
 
 router.get('/', songsController.allSongs);
 
 router.post('/',
-    // isAuthenticated,
+    isAuthenticated,
     validation.saveSongs,
     songsController.createSongs);
 router.put('/:id',
-    // isAuthenticated,
+    isAuthenticated,
     validation.saveSongs,
     songsController.updateSongs);
 router.delete('/:id',
@@ -28,7 +28,7 @@ router.delete('/:id',
     ]
     #swagger.consumes = []   // explicitly no request body
   */
-    // isAuthenticated,
+    isAuthenticated,
     validation.saveSongs,
     songsController.deleteSongs);
 
