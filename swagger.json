@@ -339,35 +339,21 @@
       },
       "delete": {
         "description": "",
+        "consumes": [
+          null
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "tags": {
-                  "example": "any"
-                }
-              }
-            }
+            "type": "string",
+            "description": "Song ID"
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       }

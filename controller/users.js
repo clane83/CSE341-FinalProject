@@ -132,8 +132,8 @@ const deleteUser = async (req, res) => {
         const userId = new ObjectId(req.params.id);
         const response = await dbClient
             .getDb()
-            .collection('users')              // <- was 'user'
-            .deleteOne({ _id: userId });      // <- removed stray "true"
+            .collection('users')              
+            .deleteOne({ _id: userId });     
 
         if (response.deletedCount > 0) {
             return res.status(204).send();    // No Content on success
