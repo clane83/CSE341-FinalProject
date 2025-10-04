@@ -8,10 +8,6 @@ router.use('/reviews', require('./reviews'));
 router.use('/playlists', require('./playlists'));
 router.use('/', require('./swagger'));
 
-router.get('/', (req, res) => {
-    //#swagger.tags = ['Hello world']
-    res.send('API is running. See /api-doc for swagger UI.');
-});
 
 // router.get('/login', passport.authenticate('github'), (req, res) => { });
 
