@@ -10,17 +10,17 @@ router.get('/', usersController.allUsers);
 
 
 router.post('/',
-    isAuthenticated,
+    // isAuthenticated,
     validation.saveUser,
     usersController.createUser);
-// router.put('/:id',
-//     isAuthenticated,
-//     validation.saveUser,
-//     usersController.updateUser);
-// router.delete('/:id',
-//     isAuthenticated,
-//     validation.saveUser,
-//     usersController.deleteUser);
+router.put('/:id',
+    // isAuthenticated,
+    validation.saveUser,
+    usersController.updateUser);
+router.delete('/:id',
+    // isAuthenticated,
+    validation.saveUser,
+    usersController.deleteUser);
 
 
 module.exports = router;
