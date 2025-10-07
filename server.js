@@ -75,14 +75,38 @@ app.get('/', (req, res) => {
     );
 });
 
+
+
 // OAuth callback
-app.get('/github/callback',
-    passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
-    (req, res) => {
-        req.session.user = req.user;
-        res.redirect('/');
-    }
-);
+app.get('/github/callback', (req, res, next) => {
+    passport.authenticate('github', (err, user, info) => {
+        if (err) {
+            console.error('[OAuth callback err]', err);
+            return res.status(500).send('OAuth error: ' + (err.message || String(err)));
+        }
+        if (!user) {
+            console.warn('[OAuth callback no user]', info);
+            return res.status(401).send('OAuth failed: ' + (info && (info.message || JSON.stringify(info))));
+        }
+
+        // 1) Regenerate session to prevent fixation
+        req.session.regenerate((regenErr) => {
+            if (regenErr) return next(regenErr);
+
+            // 2) Let Passport establish the login (sets req.user via serializeUser)
+            req.login(user, (loginErr) => {
+                if (loginErr) return next(loginErr);
+
+                // Optional: also keep a copy for your middleware
+                req.session.user = user;
+
+                const dest = req.session.returnTo || '/';
+                delete req.session.returnTo;
+                return res.redirect(dest);
+            });
+        });
+    })(req, res, next);
+});
 
 // DB init → then start server
 mongodb.initDb((err) => {

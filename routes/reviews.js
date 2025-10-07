@@ -10,14 +10,38 @@ router.get('/', reviewsController.allReviews);
 router.post('/',
     isAuthenticated,
     validation.saveReviews,
-    reviewsController.createReviews);
+    async (req, res, next) => {
+        try {
+            await reviewsController.createReviews(req, res, next);
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+   
 router.put('/:id',
     isAuthenticated,
     validation.saveReviews,
-    reviewsController.updateReviews);
+    async (req, res, next) => {
+        try {
+            await reviewsController.updateReviews(req, res, next);
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+   
 router.delete('/:id',
     isAuthenticated,
     validation.saveReviews,
-    reviewsController.deleteReviews);
+    async (req, res, next) => {
+        try {
+            await reviewsController.deleteReviews(req, res, next);
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+
 
 module.exports = router;

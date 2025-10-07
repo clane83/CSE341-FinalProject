@@ -1,19 +1,23 @@
 const isAuthenticated = (req, res, next) => {
-    // Allow CORS preflight to pass
+    // let CORS preflight through
     if (req.method === 'OPTIONS') return next();
 
-    const authed = req.session?.users || req.users;
+    // what you actually set in /github/callback
+    const authed = req.session?.user || req.user; // session user (preferred), or Passport's req.user
+
     if (!authed) {
-        const wantsJSON = (req.get('accept') || '').includes('application/json');
+        // Swagger "Try it out" sends application/json; return JSON 401 for APIs
+        const wantsJSON = (req.get('accept') || '').includes('application/json') || req.xhr || req.path.startsWith('/api');
         if (wantsJSON) {
             return res.status(401).json('You do not have access.');
         }
-        // Browser flow: send to login
+        // browser navigation → bounce to login
         return res.redirect('/login?error=auth_required');
     }
+
+    // (optional) expose user to downstream
+    req.user = authed;
     next();
 };
 
-module.exports = {
-    isAuthenticated
-}
+module.exports = { isAuthenticated };

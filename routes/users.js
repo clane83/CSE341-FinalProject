@@ -12,15 +12,39 @@ router.get('/', usersController.allUsers);
 router.post('/',
     isAuthenticated,
     validation.saveUser,
-    usersController.createUser);
+    async (req, res, next) => {
+        try {
+            await usersController.createUser(req, res, next);
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+
 router.put('/:id',
     isAuthenticated,
     validation.saveUser,
-    usersController.updateUser);
+    async (req, res, next) => {
+        try {
+            await usersController.updateUser(req, res, next);
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+
 router.delete('/:id',
     isAuthenticated,
     validation.saveUser,
-    usersController.deleteUser);
+    async (req, res, next) => {
+        try {
+            await usersController.deleteUser(req, res, next);
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+
 
 
 module.exports = router;
