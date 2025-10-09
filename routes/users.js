@@ -9,7 +9,7 @@ router.get('/', usersController.allUsers);
 
 
 
-router.post('/',
+router.post('/', 
     isAuthenticated,
     validation.saveUser,
     async (req, res, next) => {
